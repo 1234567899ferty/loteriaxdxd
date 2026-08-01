@@ -113,26 +113,9 @@ button:hover {
 <body>
 
 <h1>🎴 Lotería Online</h1>
-
-<div id="fraseActual">
-    Frase:
-    <br>
-    ...
-</div>
-
-<!-- Carta que está saliendo -->
-<div id="cartaActual">
-    Carta actual:
-    <br>
-    ❓
-</div>
-
-
-<!-- Botón para sacar una nueva carta -->
-<button onclick="siguienteCarta()">
-    🎴 Siguiente carta
-</button>
+<hr>
 <h2>Partida</h2>
+
 
 <button onclick="crearPartida()">
     🎮 Crear partida
@@ -151,11 +134,6 @@ button:hover {
     🔗 Unirse a partida
 </button>
 
-<!-- Contador de cartas -->
-<p id="contador">
-    Carta 0 de 54
-</p>
-
 <h2>Dificultad</h2>
 
 <select id="dificultad">
@@ -171,12 +149,38 @@ button:hover {
 <button onclick="crearTablero()">
     🎴 Crear tablero
 </button>
+<hr> <hr>
+<div id="fraseActual">
+    Frase:
+    <br>
+    ...
+</div>
+
+<!-- Carta que está saliendo -->
+<div id="cartaActual">
+    Carta actual:
+    <br>
+    ❓
+</div>
+
+
+<!-- Botón para sacar una nueva carta -->
+<button onclick="siguienteCarta()">
+    🎴 Siguiente carta
+</button>
+
+</button>
 <button onclick="iniciarCronometro()">
 ⏱️ Iniciar cronómetro
 </button>
 <div id="cronometro">
     ⏱️ Tiempo: 00:00:00
 </div>
+<!-- Contador de cartas -->
+<p id="contador">
+    Carta 0 de 54
+</p>
+
 <div id="tablero">
 </div>
 <br>
