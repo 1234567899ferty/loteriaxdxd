@@ -611,14 +611,13 @@ function comprobarLoteria(){
     let cartasMarcadas = document.querySelectorAll(".carta.marcada");
 
 
-    if(cartasMarcadas.length != 12){
+if(cartasMarcadas.length != cantidadCartasTablero){
 
-        alert("⚠️ Todavía faltan cartas por marcar");
+    alert("⚠️ Todavía faltan cartas por marcar");
 
-        return;
+    return;
 
-    }
-
+}
 
     for(let carta of tableroJugador){
 
