@@ -1,140 +1,225 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Lotería Online</title>
+<title>Lotería Online v2.1</title>
 
 <style>
-/* ===== DISEÑO GENERAL ===== */
-
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: #f5e6c8;
-    margin: 0;
-    padding: 20px;
+body{
+    font-family:Arial,sans-serif;
+    text-align:center;
+    background:#f5e6c8;
+    margin:0;
+    padding:20px;
 }
 
-
-/* ===== TÍTULO DEL JUEGO ===== */
-
-h1 {
-    color: #8b0000;
-    font-size: 35px;
+h1{
+    color:#8b0000;
+    font-size:clamp(30px,7vw,40px);
 }
 
-
-/* ===== CARTA QUE SALE ===== */
-
-#cartaActual {
-  background: white;
-    border: 3px solid #8b0000;
-    border-radius: 15px;
-    width: 250px;
-    margin: 20px auto;
-    padding: 20px;
-    font-size: 25px;
+hr{
+    border:0;
+    border-top:2px solid #8b0000;
+    max-width:700px;
 }
 
-#fraseActual {
-    background: #fff8dc;
-    border: 2px solid #8b0000;
-    border-radius: 15px;
-    width: 250px;
-    margin: 10px auto 20px auto;
-    padding: 15px;
-    font-size: 18px;
-    font-style: italic;
+button{
+    background:#8b0000;
+    color:white;
+    border:none;
+    border-radius:10px;
+    padding:15px 25px;
+    font-size:18px;
+    cursor:pointer;
+    margin:6px;
+    transition:.2s;
 }
 
-/* ===== BOTÓN SIGUIENTE CARTA ===== */
-
-button {
-    background: #8b0000;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 15px 25px;
-    font-size: 18px;
-    cursor: pointer;
+button:hover{
+    background:#b22222;
+    transform:scale(1.04);
 }
 
-
-/* Cambia cuando pasas el dedo o mouse encima */
-
-button:hover {
-    background: #b22222;
+button:active{
+    transform:scale(.96);
 }
 
-
-/* ===== TABLERO DE LOTERÍA ===== */
-
-#tablero {
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    gap: 10px;
-    justify-content: center;
-    margin-top: 20px;
+input,select{
+    padding:12px;
+    font-size:17px;
+    border:2px solid #8b0000;
+    border-radius:8px;
+    margin:5px;
 }
 
-
-/* ===== CARTAS DEL TABLERO ===== */
-
-.carta {
-    width: 100px;
-    height: 130px;
-    background: white;
-    border: 2px solid black;
-    border-radius: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-    font-size: 16px;
+#cartaActual{
+    background:white;
+    border:3px solid #8b0000;
+    border-radius:15px;
+    width:min(250px,80%);
+    margin:20px auto;
+    padding:25px 20px;
+    font-size:25px;
+    transition:.2s;
 }
 
-
-/* ===== CARTA MARCADA ===== */
-
-.carta.marcada {
-    background: #ddd;
-    text-decoration: line-through;
-    opacity: 0.6;
+#cartaActual.nueva{
+    animation:cartaNueva .5s;
 }
 
+@keyframes cartaNueva{
+    0%{
+        transform:scale(.7) rotate(-5deg);
+        opacity:0;
+    }
+    60%{
+        transform:scale(1.08) rotate(2deg);
+    }
+    100%{
+        transform:scale(1) rotate(0);
+        opacity:1;
+    }
+}
+
+#fraseActual{
+    background:#fff8dc;
+    border:2px solid #8b0000;
+    border-radius:15px;
+    width:min(250px,80%);
+    margin:10px auto 20px auto;
+    padding:15px;
+    font-size:18px;
+    font-style:italic;
+}
+
+#tablero{
+    display:grid;
+    grid-template-columns:repeat(3,100px);
+    gap:10px;
+    justify-content:center;
+    margin-top:20px;
+}
+
+.carta{
+    width:100px;
+    height:130px;
+    background:white;
+    border:2px solid black;
+    border-radius:10px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+    font-size:16px;
+    padding:5px;
+    box-sizing:border-box;
+    transition:.2s;
+    user-select:none;
+}
+
+.carta:hover{
+    transform:translateY(-4px);
+}
+
+.carta:active{
+    transform:scale(.95);
+}
+
+.carta.marcada{
+    background:#ffd54f;
+    border:3px solid #8b0000;
+    text-decoration:line-through;
+    opacity:.75;
+    animation:marcar .25s;
+}
+
+@keyframes marcar{
+    50%{
+        transform:scale(1.08);
+    }
+}
+
+#cronometro{
+    font-size:22px;
+    font-weight:bold;
+    margin:15px;
+}
+
+#contador{
+    font-size:18px;
+    font-weight:bold;
+}
+
+#mensajeJuego{
+    min-height:25px;
+    font-size:18px;
+    font-weight:bold;
+    color:#8b0000;
+}
+
+#codigoPartida{
+    font-size:20px;
+    font-weight:bold;
+}
+
+@media(max-width:600px){
+
+    body{
+        padding:12px;
+    }
+
+    #tablero{
+        grid-template-columns:repeat(3,85px);
+        gap:7px;
+    }
+
+    .carta{
+        width:85px;
+        height:115px;
+        font-size:13px;
+    }
+
+    button{
+        font-size:16px;
+        padding:12px 18px;
+    }
+}
 </style>
-
 </head>
 
 <body>
 
-<h1>🎴 Lotería Online</h1>
-<hr>
-<h2>Partida</h2>
+<h1>🎴 Lotería Online <span style="font-size:18px;color:#777;">v2.1</span></h1>
 
+<p>Juega Lotería usando códigos de partida.</p>
+
+<hr>
+
+<h2>🎮 Partida</h2>
 
 <button onclick="crearPartida()">
-    🎮 Crear partida
+🎮 Crear partida
 </button>
 
 <p id="codigoPartida">
-    Código: ------
+Código: ------
 </p>
-<br>
 
 <input id="codigoEntrada" placeholder="Escribe código">
 
-<br><br>
+<br>
 
 <button onclick="unirsePartida()">
-    🔗 Unirse a partida
+🔗 Unirse a partida
 </button>
 
-<h2>Dificultad</h2>
+<h2>⚙️ Dificultad</h2>
 
 <select id="dificultad">
     <option value="9">🟢 Fácil (9 cartas)</option>
@@ -142,47 +227,54 @@ button:hover {
     <option value="24">🔴 Difícil (24 cartas)</option>
 </select>
 
-<h2>Mi tablero</h2>
+<h2>🎴 Mi tablero</h2>
 
-
-<!-- Aquí aparecerán las cartas del jugador -->
 <button onclick="crearTablero()">
-    🎴 Crear tablero
+🎴 Crear tablero
 </button>
-<hr> <hr>
+
+<hr>
+
 <div id="fraseActual">
-    Frase:
-    <br>
-    ...
+Frase:
+<br>
+...
 </div>
 
-<!-- Carta que está saliendo -->
 <div id="cartaActual">
-    Carta actual:
-    <br>
-    ❓
+Carta actual:
+<br>
+❓
 </div>
 
-
-<!-- Botón para sacar una nueva carta -->
 <button onclick="siguienteCarta()">
-    🎴 Siguiente carta
+🎴 Siguiente carta
 </button>
 
-</button>
+<br>
+
 <button onclick="iniciarCronometro()">
 ⏱️ Iniciar cronómetro
 </button>
+
+<button onclick="reiniciarJuego()">
+🔄 Reiniciar
+</button>
+
 <div id="cronometro">
-    ⏱️ Tiempo: 00:00:00
+⏱️ Tiempo: 00:00:00
 </div>
-<!-- Contador de cartas -->
+
 <p id="contador">
-    Carta 0 de 54
+Carta 0 de 54
 </p>
 
-<div id="tablero">
-</div>
+<p id="mensajeJuego">
+¡Crea o únete a una partida para comenzar!
+</p>
+
+<div id="tablero"></div>
+
 <br>
 
 <button onclick="comprobarLoteria()">
@@ -190,7 +282,10 @@ button:hover {
 </button>
 
 <script>
-// ===== CARTAS DE LA LOTERÍA =====
+
+/* =====================================================
+   CARTAS
+===================================================== */
 
 let cartas = [
 "🐓 El Gallo",
@@ -248,401 +343,829 @@ let cartas = [
 "🎼 El Arpa",
 "🐸 La Rana"
 ];
+
+
+/* =====================================================
+   FRASES
+===================================================== */
+
 let frases = {
 
-"🐓 El Gallo": "Cuando sale el sol me pongo a cantar, aunque a todo el barrio puedo despertar.",
-
-"😈 El Diablito": "Tengo cola y cuernitos, me gusta bromear, pero si me porto bien me dejan jugar.",
-
-"👩 La Dama": "Con vestido elegante me gusta caminar, con mucho estilo me puedes encontrar.",
-
-"🎩 El Catrín": "Con traje y sombrero me gusta presumir, aunque sin peinarme me pueden descubrir.",
-
-"☂️ El Paraguas": "Cuando cae la lluvia me gusta salir, pero con mucho viento me puedo ir.",
-
-"🧜 La Sirena": "Vivo entre las olas, me gusta cantar, con mi dulce voz te puedo encantar.",
-
-"🪜 La Escalera": "Peldaño tras peldaño me gusta subir, si tienes cuidado no vas a caer al salir.",
-
-"🍾 La Botella": "Guardo un secreto en mi interior, me destapan cuando hay celebración.",
-
-"🛢️ El Barril": "Soy redondo y pesado, me gusta guardar, cosas que se pueden conservar.",
-
-"🌳 El Árbol": "Tengo brazos sin manos y sombra al dar, muchos animalitos me vienen a visitar.",
-
-"🍈 El Melón": "Soy grande y sabroso, me gusta refrescar, con semillas pequeñas me puedes encontrar.",
-
-"💪 El Valiente": "No tengo miedo al peligro ni a la oscuridad, camino con fuerza y mucha seguridad.",
-
-"🎩 El Gorrito": "Voy en la cabeza para proteger, cuando hace frío me gusta aparecer.",
-
-"💀 La Muerte": "Aunque doy miedo al mirar, todos me van a encontrar.",
-
-"🍐 La Pera": "Tengo forma curiosa y sabor especial, en una canasta me veo genial.",
-
-"🇲🇽 La Bandera": "Tengo colores que voy a mostrar, en fiestas patrias me suelen mirar.",
-
-"🎸 El Bandolón": "Tengo muchas cuerdas para tocar, con música alegre me pongo a sonar.",
-
-"🎻 El Violín": "Soy pequeño y elegante al cantar, con mis cuerdas me gusta sonar.",
-
-"🪿 La Garza": "Camino en el agua sin mucho mojar, con patas largas me puedes mirar.",
-
-"🐦 El Pájaro": "Tengo alas pequeñas y puedo volar, entre los árboles me gusta cantar.",
-
-"✋ La Mano": "Cinco hermanitos juntos están, ayudan y trabajan sin descansar.",
-
-"👢 La Bota": "Voy en el pie para caminar, por caminos largos me gusta acompañar.",
-
-"🌙 La Luna": "Cuando llega la noche me pongo a brillar, desde lo alto me puedes mirar.",
-
-"🦜 El Cotorro": "Repito palabras sin descansar, con muchos colores me puedes encontrar.",
-
-"🍷 El Borracho": "Camino chuequito sin dirección, dicen que perdí la razón.",
-
-"👤 El Negrito": "Con mucho sabor me pueden buscar, en dulces y juegos suelo aparecer.",
-
-"❤️ El Corazón": "Late y late sin parar, cuando hay cariño lo puedes notar.",
-
-"🍉 La Sandía": "Soy verde por fuera y roja al partir, con muchas semillas me gusta lucir.",
-
-"🥁 El Tambor": "Golpe tras golpe me pongo a sonar, en las fiestas me gusta animar.",
-
-"🦐 El Camarón": "Vivo en el agua y sé nadar, con mi colita me puedes encontrar.",
-
-"🏹 Las Jaras": "Voy por el aire sin tropezar, con buena puntería puedo llegar.",
-
-"🎵 El Músico": "Con sonidos y melodías puedo alegrar, en una fiesta me puedes hallar.",
-
-"🕷️ La Araña": "Tengo muchas patas y sé caminar, en una esquina me puedo ocultar.",
-
-"🪖 El Soldado": "Con uniforme voy a marchar, siguiendo órdenes voy a caminar.",
-
-"⭐ La Estrella": "Brillo en el cielo sin descansar, por las noches me puedes mirar.",
-
-"🥘 El Cazo": "En la cocina me gusta estar, comidas deliciosas puedo ayudar a preparar.",
-
-"🌎 El Mundo": "Soy grande y redondo sin parar de girar, muchos lugares puedes encontrar.",
-
-"🪶 El Apache": "Con plumas y fuerza suelo andar, historias antiguas me puedes escuchar.",
-
-"🌵 El Nopal": "Tengo espinas para cuidar, pero ricos frutos puedo dar.",
-
-"🦂 El Alacrán": "Camino despacio sin tropezar, cuidado conmigo al acercar.",
-
-"🌹 La Rosa": "Tengo pétalos y buen olor, regalo cariño con mucho amor.",
-
-"💀 La Calavera": "Tengo sonrisa misteriosa y me gusta aparecer, en fiestas especiales me puedes ver.",
-
-"🔔 La Campana": "Cuando me golpean puedo sonar, una noticia puedo anunciar.",
-
-"🏺 El Cantarito": "Guardo líquidos con mucho cuidado, soy pequeño y decorado.",
-
-"🦌 El Venado": "Corro por el bosque con gran velocidad, tengo cuernos y mucha agilidad.",
-
-"☀️ El Sol": "Doy luz y calor sin descansar, cada mañana vuelvo a despertar.",
-
-"👑 La Corona": "En la cabeza me gusta estar, como un rey me puedes imaginar.",
-
-"🚣 La Chalupa": "Voy por el agua sin caminar, con remos me puedo pasear.",
-
-"🌲 El Pino": "Soy verde todo el año sin cambiar, en el bosque me puedes encontrar.",
-
-"🐟 El Pescado": "Vivo en el agua y sé nadar, con escamas me puedes mirar.",
-
-"🌴 La Palma": "Tengo hojas arriba y me gusta bailar, con el viento me dejo llevar.",
-
-"🪴 La Maceta": "Guardo una planta con mucho amor, decoro la casa con gran color.",
-
-"🎼 El Arpa": "Tengo muchas cuerdas para tocar, melodías bonitas puedo regalar.",
-
-"🐸 La Rana": "Salto en el charco sin parar, con mi croac te puedo saludar."
+"🐓 El Gallo":"Cuando sale el sol me pongo a cantar, aunque a todo el barrio puedo despertar.",
+"😈 El Diablito":"Tengo cola y cuernitos, me gusta bromear, pero si me porto bien me dejan jugar.",
+"👩 La Dama":"Con vestido elegante me gusta caminar, con mucho estilo me puedes encontrar.",
+"🎩 El Catrín":"Con traje y sombrero me gusta presumir, aunque sin peinarme me pueden descubrir.",
+"☂️ El Paraguas":"Cuando cae la lluvia me gusta salir, pero con mucho viento me puedo ir.",
+"🧜 La Sirena":"Vivo entre las olas, me gusta cantar, con mi dulce voz te puedo encantar.",
+"🪜 La Escalera":"Peldaño tras peldaño me gusta subir, si tienes cuidado no vas a caer al salir.",
+"🍾 La Botella":"Guardo un secreto en mi interior, me destapan cuando hay celebración.",
+"🛢️ El Barril":"Soy redondo y pesado, me gusta guardar, cosas que se pueden conservar.",
+"🌳 El Árbol":"Tengo brazos sin manos y sombra al dar, muchos animalitos me vienen a visitar.",
+"🍈 El Melón":"Soy grande y sabroso, me gusta refrescar, con semillas pequeñas me puedes encontrar.",
+"💪 El Valiente":"No tengo miedo al peligro ni a la oscuridad, camino con fuerza y mucha seguridad.",
+"🎩 El Gorrito":"Voy en la cabeza para proteger, cuando hace frío me gusta aparecer.",
+"💀 La Muerte":"Aunque doy miedo al mirar, todos me van a encontrar.",
+"🍐 La Pera":"Tengo forma curiosa y sabor especial, en una canasta me veo genial.",
+"🇲🇽 La Bandera":"Tengo colores que voy a mostrar, en fiestas patrias me suelen mirar.",
+"🎸 El Bandolón":"Tengo muchas cuerdas para tocar, con música alegre me pongo a sonar.",
+"🎻 El Violín":"Soy pequeño y elegante al cantar, con mis cuerdas me gusta sonar.",
+"🪿 La Garza":"Camino en el agua sin mucho mojar, con patas largas me puedes mirar.",
+"🐦 El Pájaro":"Tengo alas pequeñas y puedo volar, entre los árboles me gusta cantar.",
+"✋ La Mano":"Cinco hermanitos juntos están, ayudan y trabajan sin descansar.",
+"👢 La Bota":"Voy en el pie para caminar, por caminos largos me gusta acompañar.",
+"🌙 La Luna":"Cuando llega la noche me pongo a brillar, desde lo alto me puedes mirar.",
+"🦜 El Cotorro":"Repito palabras sin descansar, con muchos colores me puedes encontrar.",
+"🍷 El Borracho":"Camino chuequito sin dirección, dicen que perdí la razón.",
+"👤 El Negrito":"Con mucho sabor me pueden buscar, en dulces y juegos suelo aparecer.",
+"❤️ El Corazón":"Late y late sin parar, cuando hay cariño lo puedes notar.",
+"🍉 La Sandía":"Soy verde por fuera y roja al partir, con muchas semillas me gusta lucir.",
+"🥁 El Tambor":"Golpe tras golpe me pongo a sonar, en las fiestas me gusta animar.",
+"🦐 El Camarón":"Vivo en el agua y sé nadar, con mi colita me puedes encontrar.",
+"🏹 Las Jaras":"Voy por el aire sin tropezar, con buena puntería puedo llegar.",
+"🎵 El Músico":"Con sonidos y melodías puedo alegrar, en una fiesta me puedes hallar.",
+"🕷️ La Araña":"Tengo muchas patas y sé caminar, en una esquina me puedo ocultar.",
+"🪖 El Soldado":"Con uniforme voy a marchar, siguiendo órdenes voy a caminar.",
+"⭐ La Estrella":"Brillo en el cielo sin descansar, por las noches me puedes mirar.",
+"🥘 El Cazo":"En la cocina me gusta estar, comidas deliciosas puedo ayudar a preparar.",
+"🌎 El Mundo":"Soy grande y redondo sin parar de girar, muchos lugares puedes encontrar.",
+"🪶 El Apache":"Con plumas y fuerza suelo andar, historias antiguas me puedes escuchar.",
+"🌵 El Nopal":"Tengo espinas para cuidar, pero ricos frutos puedo dar.",
+"🦂 El Alacrán":"Camino despacio sin tropezar, cuidado conmigo al acercar.",
+"🌹 La Rosa":"Tengo pétalos y buen olor, regalo cariño con mucho amor.",
+"💀 La Calavera":"Tengo sonrisa misteriosa y me gusta aparecer, en fiestas especiales me puedes ver.",
+"🔔 La Campana":"Cuando me golpean puedo sonar, una noticia puedo anunciar.",
+"🏺 El Cantarito":"Guardo líquidos con mucho cuidado, soy pequeño y decorado.",
+"🦌 El Venado":"Corro por el bosque con gran velocidad, tengo cuernos y mucha agilidad.",
+"☀️ El Sol":"Doy luz y calor sin descansar, cada mañana vuelvo a despertar.",
+"👑 La Corona":"En la cabeza me gusta estar, como un rey me puedes imaginar.",
+"🚣 La Chalupa":"Voy por el agua sin caminar, con remos me puedo pasear.",
+"🌲 El Pino":"Soy verde todo el año sin cambiar, en el bosque me puedes encontrar.",
+"🐟 El Pescado":"Vivo en el agua y sé nadar, con escamas me puedes mirar.",
+"🌴 La Palma":"Tengo hojas arriba y me gusta bailar, con el viento me dejo llevar.",
+"🪴 La Maceta":"Guardo una planta con mucho amor, decoro la casa con gran color.",
+"🎼 El Arpa":"Tengo muchas cuerdas para tocar, melodías bonitas puedo regalar.",
+"🐸 La Rana":"Salto en el charco sin parar, con mi croac te puedo saludar."
 
 };
-// ===== VARIABLES DEL JUEGO =====
-
-let tableroJugador = [];
-
-let cartasSalidas = [];
-
-let contadorCartas = 0;
-
-let semilla = 0;
-
-let cartasOrdenadas = [];
-
-let cantidadCartasTablero = 12;
-
-let segundos = 0;
-
-let minutos = 0;
-
-let horas = 0;
-
-let tiempoActivo = false;
-
-let reloj;
 
 
-// ===== CREAR CÓDIGO DE PARTIDA =====
+/* =====================================================
+   VARIABLES
+===================================================== */
 
-let codigoActual = null;
+let tableroJugador=[];
+let cartasSalidas=[];
+let contadorCartas=0;
 
+let semilla=0;
+let cartasOrdenadas=[];
+
+let cantidadCartasTablero=12;
+
+let segundos=0;
+let minutos=0;
+let horas=0;
+
+let tiempoActivo=false;
+let reloj=null;
+
+let codigoActual=null;
+
+
+/* =====================================================
+   SISTEMA DE SONIDO
+   WEB AUDIO API
+   NO GUARDA NADA
+===================================================== */
+
+let audioCtx=null;
+
+function iniciarAudio(){
+
+    if(!audioCtx){
+
+        audioCtx=new(
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+
+    }
+
+    if(audioCtx.state==="suspended"){
+        audioCtx.resume();
+    }
+}
+
+
+function sonido(tipo){
+
+    try{
+
+        iniciarAudio();
+
+        let ahora=audioCtx.currentTime;
+
+        if(tipo==="click"){
+
+            let o=audioCtx.createOscillator();
+            let g=audioCtx.createGain();
+
+            o.connect(g);
+            g.connect(audioCtx.destination);
+
+            o.frequency.setValueAtTime(500,ahora);
+            o.frequency.exponentialRampToValueAtTime(
+                250,
+                ahora+.08
+            );
+
+            g.gain.setValueAtTime(.08,ahora);
+            g.gain.exponentialRampToValueAtTime(
+                .01,
+                ahora+.08
+            );
+
+            o.start();
+            o.stop(ahora+.08);
+        }
+
+
+        if(tipo==="carta"){
+
+            let o=audioCtx.createOscillator();
+            let g=audioCtx.createGain();
+
+            o.connect(g);
+            g.connect(audioCtx.destination);
+
+            o.type="triangle";
+
+            o.frequency.setValueAtTime(350,ahora);
+            o.frequency.exponentialRampToValueAtTime(
+                700,
+                ahora+.18
+            );
+
+            g.gain.setValueAtTime(.12,ahora);
+            g.gain.exponentialRampToValueAtTime(
+                .01,
+                ahora+.25
+            );
+
+            o.start();
+            o.stop(ahora+.25);
+        }
+
+
+        if(tipo==="marcar"){
+
+            let o=audioCtx.createOscillator();
+            let g=audioCtx.createGain();
+
+            o.connect(g);
+            g.connect(audioCtx.destination);
+
+            o.type="square";
+            o.frequency.setValueAtTime(650,ahora);
+
+            g.gain.setValueAtTime(.06,ahora);
+            g.gain.exponentialRampToValueAtTime(
+                .01,
+                ahora+.08
+            );
+
+            o.start();
+            o.stop(ahora+.08);
+        }
+
+
+        if(tipo==="error"){
+
+            let o=audioCtx.createOscillator();
+            let g=audioCtx.createGain();
+
+            o.connect(g);
+            g.connect(audioCtx.destination);
+
+            o.type="sawtooth";
+
+            o.frequency.setValueAtTime(180,ahora);
+            o.frequency.linearRampToValueAtTime(
+                80,
+                ahora+.25
+            );
+
+            g.gain.setValueAtTime(.1,ahora);
+            g.gain.exponentialRampToValueAtTime(
+                .01,
+                ahora+.25
+            );
+
+            o.start();
+            o.stop(ahora+.25);
+        }
+
+
+        if(tipo==="win"){
+
+            let notas=[
+                523.25,
+                659.25,
+                783.99,
+                1046.50
+            ];
+
+            notas.forEach((frecuencia,i)=>{
+
+                let o=audioCtx.createOscillator();
+                let g=audioCtx.createGain();
+
+                o.connect(g);
+                g.connect(audioCtx.destination);
+
+                let inicio=ahora+i*.12;
+
+                o.frequency.setValueAtTime(
+                    frecuencia,
+                    inicio
+                );
+
+                g.gain.setValueAtTime(
+                    .1,
+                    inicio
+                );
+
+                g.gain.exponentialRampToValueAtTime(
+                    .01,
+                    inicio+.25
+                );
+
+                o.start(inicio);
+                o.stop(inicio+.25);
+
+            });
+
+        }
+
+    }catch(e){}
+
+}
+
+
+/* =====================================================
+   CREAR PARTIDA
+===================================================== */
 
 function crearPartida(){
 
-    if(codigoActual != null){
+    sonido("click");
 
-        document.getElementById("codigoPartida").innerHTML =
-        "Código: " + codigoActual;
-semilla = crearSemilla(codigoActual);
-cartasOrdenadas = mezclarConSemilla(cartas);
+    if(codigoActual!==null){
+
+        document.getElementById(
+            "codigoPartida"
+        ).innerHTML="Código: "+codigoActual;
+
+        mensaje(
+            "Ya tienes una partida activa."
+        );
+
         return;
+    }
+
+    let caracteres=
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    codigoActual="LOT-";
+
+    for(let i=0;i<6;i++){
+
+        codigoActual+=
+            caracteres[
+                Math.floor(
+                    Math.random()*caracteres.length
+                )
+            ];
 
     }
 
+    semilla=crearSemilla(codigoActual);
 
-    let caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    cartasOrdenadas=
+        mezclarConSemilla(cartas);
 
+    document.getElementById(
+        "codigoPartida"
+    ).innerHTML="Código: "+codigoActual;
 
-    codigoActual = "LOT-";
-
-
-    for(let i = 0; i < 6; i++){
-
-        codigoActual += caracteres[
-            Math.floor(Math.random() * caracteres.length)
-        ];
-
-    }
-
-
-    document.getElementById("codigoPartida").innerHTML =
-    "Código: " + codigoActual;
-semilla = crearSemilla(codigoActual);
-cartasOrdenadas = mezclarConSemilla(cartas);
+    mensaje(
+        "🎮 Partida creada. Comparte el código."
+    );
 
 }
 
-// ===== UNIRSE A PARTIDA =====
+
+/* =====================================================
+   UNIRSE
+===================================================== */
 
 function unirsePartida(){
 
-    let codigo = document.getElementById("codigoEntrada").value;
+    sonido("click");
 
+    let codigo=
+        document.getElementById(
+            "codigoEntrada"
+        ).value.trim().toUpperCase();
 
-    if(codigo == ""){
+    if(codigo===""){
 
-        alert("Escribe un código de partida");
+        sonido("error");
+
+        mensaje(
+            "⚠️ Escribe un código de partida."
+        );
 
         return;
-
     }
 
+    codigoActual=codigo;
 
-    codigoActual = codigo;
+    semilla=crearSemilla(codigoActual);
 
+    cartasOrdenadas=
+        mezclarConSemilla(cartas);
 
-    semilla = crearSemilla(codigoActual);
+    document.getElementById(
+        "codigoPartida"
+    ).innerHTML=
+        "Código: "+codigoActual;
 
-
-    cartasOrdenadas = mezclarConSemilla(cartas);
-
-
-    document.getElementById("codigoPartida").innerHTML =
-    "Código: " + codigoActual;
-
-
-    alert("Te uniste a la partida");
+    mensaje(
+        "🔗 Te uniste a la partida."
+    );
 
 }
 
-// ===== CONVERTIR CÓDIGO EN SEMILLA =====
+
+/* =====================================================
+   SEMILLA
+===================================================== */
 
 function crearSemilla(codigo){
 
-    let numero = 0;
+    let numero=0;
 
+    for(let i=0;i<codigo.length;i++){
 
-    for(let i = 0; i < codigo.length; i++){
-
-        numero += codigo.charCodeAt(i);
+        numero+=codigo.charCodeAt(i);
 
     }
-
 
     return numero;
 
 }
 
-// ===== MEZCLAR CON SEMILLA =====
+
+/* =====================================================
+   MEZCLA
+===================================================== */
 
 function mezclarConSemilla(lista){
 
-    let resultado = [...lista];
+    let resultado=[...lista];
 
-    let numero = semilla;
+    let numero=semilla;
 
+    for(
+        let i=resultado.length-1;
+        i>0;
+        i--
+    ){
 
-    for(let i = resultado.length - 1; i > 0; i--){
+        numero=
+            (numero*9301+49297)%233280;
 
-        numero = (numero * 9301 + 49297) % 233280;
-
-
-        let posicion = Math.floor(
-            (numero / 233280) * (i + 1)
+        let posicion=Math.floor(
+            (numero/233280)*(i+1)
         );
 
+        let temporal=resultado[i];
 
-        let temporal = resultado[i];
+        resultado[i]=resultado[posicion];
 
-        resultado[i] = resultado[posicion];
-
-        resultado[posicion] = temporal;
+        resultado[posicion]=temporal;
 
     }
-
 
     return resultado;
 
 }
-// ===== CREAR TABLERO =====
+
+
+/* =====================================================
+   CREAR TABLERO
+===================================================== */
 
 function crearTablero(){
 
-    cantidadCartasTablero = Number(
-        document.getElementById("dificultad").value
-    );
+    sonido("click");
 
+    cantidadCartasTablero=
+        Number(
+            document.getElementById(
+                "dificultad"
+            ).value
+        );
 
-    tableroJugador = [...cartas]
-    .sort(() => Math.random() - 0.5)
-    .slice(0,cantidadCartasTablero);
+    tableroJugador=
+        [...cartas]
+        .sort(()=>Math.random()-.5)
+        .slice(0,cantidadCartasTablero);
 
-    let tablero = document.getElementById("tablero");
+    let tablero=
+        document.getElementById("tablero");
 
-    tablero.innerHTML = "";
+    tablero.innerHTML="";
 
+    tableroJugador.forEach(carta=>{
 
-    tableroJugador.forEach(carta => {
+        let nuevaCarta=
+            document.createElement("div");
 
-        let nuevaCarta = document.createElement("div");
+        nuevaCarta.className="carta";
 
-        nuevaCarta.className = "carta";
-nuevaCarta.innerHTML = carta;
-        // Marcar carta al tocar
+        nuevaCarta.innerHTML=carta;
 
-        nuevaCarta.onclick = function(){
+        nuevaCarta.onclick=function(){
 
-            nuevaCarta.classList.toggle("marcada");
+            nuevaCarta.classList.toggle(
+                "marcada"
+            );
+
+            sonido("marcar");
 
         };
-
 
         tablero.appendChild(nuevaCarta);
 
     });
 
+    mensaje(
+        "🎴 Tablero creado con "+
+        cantidadCartasTablero+
+        " cartas."
+    );
+
 }
 
 
-// ===== CRONÓMETRO =====
+/* =====================================================
+   CRONÓMETRO
+===================================================== */
 
 function iniciarCronometro(){
 
-    if(tiempoActivo) return;
+    sonido("click");
 
-    tiempoActivo = true;
+    if(tiempoActivo){
 
-    reloj = setInterval(()=>{
+        mensaje(
+            "⏱️ El cronómetro ya está funcionando."
+        );
+
+        return;
+    }
+
+    tiempoActivo=true;
+
+    reloj=setInterval(()=>{
 
         segundos++;
 
-        if(segundos == 60){
-            segundos = 0;
+        if(segundos===60){
+
+            segundos=0;
             minutos++;
+
         }
 
-        if(minutos == 60){
-            minutos = 0;
+        if(minutos===60){
+
+            minutos=0;
             horas++;
+
         }
 
-        document.getElementById("cronometro").innerHTML =
-        "⏱️ Tiempo: " +
-        String(horas).padStart(2,"0") + ":" +
-        String(minutos).padStart(2,"0") + ":" +
-        String(segundos).padStart(2,"0");
+        document.getElementById(
+            "cronometro"
+        ).innerHTML=
+            "⏱️ Tiempo: "+
+            String(horas).padStart(2,"0")+":"+
+            String(minutos).padStart(2,"0")+":"+
+            String(segundos).padStart(2,"0");
 
     },1000);
 
 }
 
-// ===== SACAR SIGUIENTE CARTA =====
+
+/* =====================================================
+   SIGUIENTE CARTA
+===================================================== */
 
 function siguienteCarta(){
 
-    if(contadorCartas >= 54){
+    sonido("click");
 
-        alert("Ya salieron todas las cartas");
+    /*
+       Si no existe partida,
+       la creamos automáticamente.
+    */
 
-        return;
+    if(codigoActual===null){
+
+        codigoActual="LOCAL";
+
+        semilla=crearSemilla(
+            codigoActual
+        );
+
+        cartasOrdenadas=
+            mezclarConSemilla(cartas);
+
+        document.getElementById(
+            "codigoPartida"
+        ).innerHTML=
+            "Código: LOCAL";
+
+        mensaje(
+            "🎮 Partida local iniciada."
+        );
 
     }
 
-let carta = cartasOrdenadas[contadorCartas];
+
+    if(contadorCartas>=54){
+
+        sonido("error");
+
+        mensaje(
+            "⚠️ Ya salieron las 54 cartas."
+        );
+
+        return;
+    }
+
+    let carta=
+        cartasOrdenadas[
+            contadorCartas
+        ];
 
     cartasSalidas.push(carta);
 
-
     contadorCartas++;
 
+    let cartaActual=
+        document.getElementById(
+            "cartaActual"
+        );
 
-    document.getElementById("cartaActual").innerHTML =
-    "Carta actual:<br>" + carta;
-document.getElementById("fraseActual").innerHTML =
-"Frase:<br>" + frases[carta];
+    cartaActual.innerHTML=
+        "Carta actual:<br>"+carta;
 
-    document.getElementById("contador").innerHTML =
-    "Carta " + contadorCartas + " de 54";
+    cartaActual.classList.remove(
+        "nueva"
+    );
+
+    void cartaActual.offsetWidth;
+
+    cartaActual.classList.add(
+        "nueva"
+    );
+
+    document.getElementById(
+        "fraseActual"
+    ).innerHTML=
+        "Frase:<br>"+
+        frases[carta];
+
+    document.getElementById(
+        "contador"
+    ).innerHTML=
+        "Carta "+
+        contadorCartas+
+        " de 54";
+
+    sonido("carta");
+
+    /*
+       Comprobar automáticamente si
+       ya puede haber Lotería.
+    */
+
+    comprobarAutomaticamente();
 
 }
 
-// ===== COMPROBAR LOTERÍA =====
+
+/* =====================================================
+   COMPROBAR LOTERÍA
+===================================================== */
 
 function comprobarLoteria(){
 
-    let cartasMarcadas = document.querySelectorAll(".carta.marcada");
+    sonido("click");
 
+    let cartasMarcadas=
+        document.querySelectorAll(
+            ".carta.marcada"
+        );
 
-if(cartasMarcadas.length != cantidadCartasTablero){
+    if(tableroJugador.length===0){
 
-    alert("⚠️ Todavía faltan cartas por marcar");
+        sonido("error");
 
-    return;
+        mensaje(
+            "⚠️ Primero crea tu tablero."
+        );
 
-}
+        return;
+    }
+
+    if(
+        cartasMarcadas.length
+        !==
+        cantidadCartasTablero
+    ){
+
+        sonido("error");
+
+        mensaje(
+            "⚠️ Todavía faltan cartas por marcar."
+        );
+
+        return;
+    }
 
     for(let carta of tableroJugador){
 
         if(!cartasSalidas.includes(carta)){
 
-            alert("❌ No puedes ganar todavía. Faltan cartas por salir");
+            sonido("error");
+
+            mensaje(
+                "❌ No puedes ganar todavía. "+
+                "Faltan cartas por salir."
+            );
 
             return;
-
         }
 
     }
 
+    sonido("win");
 
-    alert("🎉 ¡LOTERÍA! Ganaste la partida 🏆");
+    mensaje(
+        "🎉 ¡LOTERÍA! ¡GANASTE LA PARTIDA! 🏆"
+    );
 
 }
 
-// ===== INICIAR JUEGO =====
+
+/* =====================================================
+   COMPROBACIÓN AUTOMÁTICA
+===================================================== */
+
+function comprobarAutomaticamente(){
+
+    if(tableroJugador.length===0)
+        return;
+
+    let marcadas=
+        document.querySelectorAll(
+            ".carta.marcada"
+        );
+
+    if(
+        marcadas.length===
+        cantidadCartasTablero
+    ){
+
+        for(let carta of tableroJugador){
+
+            if(
+                !cartasSalidas.includes(carta)
+            ){
+
+                return;
+            }
+
+        }
+
+        sonido("win");
+
+        mensaje(
+            "🎉 ¡LOTERÍA AUTOMÁTICA! 🏆"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   MENSAJES
+===================================================== */
+
+function mensaje(texto){
+
+    document.getElementById(
+        "mensajeJuego"
+    ).innerHTML=texto;
+
+}
+
+
+/* =====================================================
+   REINICIAR
+===================================================== */
+
+function reiniciarJuego(){
+
+    sonido("click");
+
+    clearInterval(reloj);
+
+    tableroJugador=[];
+    cartasSalidas=[];
+    contadorCartas=0;
+
+    semilla=0;
+    cartasOrdenadas=[];
+
+    cantidadCartasTablero=
+        Number(
+            document.getElementById(
+                "dificultad"
+            ).value
+        );
+
+    segundos=0;
+    minutos=0;
+    horas=0;
+
+    tiempoActivo=false;
+    reloj=null;
+
+    codigoActual=null;
+
+    document.getElementById(
+        "codigoPartida"
+    ).innerHTML=
+        "Código: ------";
+
+    document.getElementById(
+        "cartaActual"
+    ).innerHTML=
+        "Carta actual:<br>❓";
+
+    document.getElementById(
+        "fraseActual"
+    ).innerHTML=
+        "Frase:<br>...";
+
+    document.getElementById(
+        "contador"
+    ).innerHTML=
+        "Carta 0 de 54";
+
+    document.getElementById(
+        "cronometro"
+    ).innerHTML=
+        "⏱️ Tiempo: 00:00:00";
+
+    document.getElementById(
+        "tablero"
+    ).innerHTML="";
+
+    document.getElementById(
+        "codigoEntrada"
+    ).value="";
+
+    mensaje(
+        "🔄 Juego reiniciado."
+    );
+
+}
+
+
+/* =====================================================
+   INICIO
+===================================================== */
+
 crearTablero();
-alert("Hola Bienvenido,a");
+
 </script>
 
 </body>
